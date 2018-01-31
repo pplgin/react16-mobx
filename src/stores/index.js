@@ -1,8 +1,10 @@
-
 import { observable, action, useStrict } from 'mobx'
+import { factory } from '../utils/common'
+
 
 useStrict(true)
 
+@factory
 class CounterStore {
   @observable counter = 0
 
@@ -14,17 +16,14 @@ class CounterStore {
   @action
   doubleAsync() {
     return new Promise((resolve) => {
-      setTimeout(action('double', () => {
+      setTimeout(action('x', () => {
         this.counter = this.counter * 2
         resolve()
       }), 200)
     })
   }
 }
-const counterStore = new CounterStore()
-
-
 
 export default {
-  counterStore
+  counterStore: CounterStore.factory
 }

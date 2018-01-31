@@ -1,48 +1,26 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { Switch, Route, Router } from 'react-router'
+import { createBrowserHistory as createHistory } from "history"
+const history = createHistory()
 
-const AsyncLoad = asycCom => {
-  return class AsyncComponent extends Component {
-    state = { AsyncCom: null}
-
-    async componentDidMount() {
-      const { default: Component } = await asycCom;
-
-      this.setState({
-        AsyncCom: Component
-      })
-    }
-
-    render() {
-      const { AsyncCom = null } = this.state;
-      return AsyncCom ? <AsyncCom {...this.props}/> : null
-    }
-  }
-}
+// async load
+import { AsyncLoad } from '../components/AsyncLoad'
 
 
-
-const App = props => (props.children)
-
-const routes = {
-  path: '/',
-  Component: App,
-  getIndexRoute(location, callback) {
-    callback(null, {
-      getComponent(loc, callback) {
-        callback(null, AsyncLoad(import(/* webpackChunkName: "home" */'../containers/Home')))
-      }
-    })
-  },
-  getChildRoutes(location, callback) {
-    callback(null,[{
-      path: 'about',
-      component: AsyncLoad(import(/* webpackChunkName: "about" */'../containers/About'))
-    }])
-  }
-}
+// page config
+const AsyncHome = AsyncLoad(() => import(/* webpackChunkName: "home" */'../containers/Home'))
+const AsyncAbout = AsyncLoad(() => import(/* webpackChunkName: "about" */'../containers/About'))
+const AsyncTst = AsyncLoad(() => import(/* webpackChunkName: "tes" */'../containers/Test'))
 
 
-export default routes
-
+export default () => (
+  <Router history={history}>
+    <Switch>
+      <Route exact path="/" component={AsyncHome}/>
+      <Route path='/about' exact component={AsyncAbout}/>
+      <Route path='/about/:userId/test' component={AsyncTst}/>
+    </Switch>
+  </Router>
+)
 
 

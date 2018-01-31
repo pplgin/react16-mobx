@@ -5,12 +5,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   entry: [
-    './src/main.js'
+    './src/App.js'
   ],
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/',
-    filename: '[name].js',
+    chunkFilename: '[name].[hash:5].js',
+    filename: '[name].bundle.js',
   },
   devtool: 'source-map',
   module: {

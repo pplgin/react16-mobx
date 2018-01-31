@@ -4,15 +4,14 @@ import { AppContainer } from 'react-hot-loader'
 import { Router, Route, browserHistory } from 'react-router'
 import { Provider } from 'mobx-react'
 
-import routes from './routers'
+import Routes from './routers'
 import stores from './stores'
-
 
 const Render =  () => {
   render(
     <AppContainer>
       <Provider {...stores}>
-        <Router history={browserHistory} routes={routes}/>
+        <Routes/>
       </Provider>
     </AppContainer>,
     document.getElementById('app')
